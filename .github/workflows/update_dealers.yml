@@ -1,0 +1,43 @@
+name: Update dealer leaderboard data
+
+on:
+  schedule:
+    - cron: '0 18 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Pull dealer data from HubSpot
+        env:
+          HUBSPOT_TOKEN: ${{ secrets.HUBSPOT_TOKEN }}
+        run: python scripts/update_dealer_data.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name "Dealer Leaderboard Bot"
+          git config user.email "actions@github.com"
+          git add data/dealer_data.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: refresh dealer data $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
