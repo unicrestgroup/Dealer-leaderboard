@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadowspec Dealer Leaderboard</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,900;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #7C109A;
+    --purple-deep: #560b6d;
+    --purple-ink: #3a0850;
+    --heron: #111111;
+    --mid: #464749;
+    --light-space: #F2F2F2;
+    --hairline: #e5e3e8;
+    --sky: #00A1DE;
+    --field: #7AB800;
+    --sun: #FF9000;
+    --white: #ffffff;
+    --red-warn: #c8303f;
+    --shadow-sm: 0 1px 2px rgba(17,17,17,0.06), 0 1px 3px rgba(17,17,17,0.04);
+    --shadow-md: 0 4px 16px rgba(17,17,17,0.08);
+    --shadow-lg: 0 24px 60px rgba(17,17,17,0.14);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Lato', -apple-system, sans-serif;
+    background: var(--light-space);
+    color: var(--heron);
+    font-size: 14px; line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; }
+  input, select { font-family: inherit; }
+
+  header.app-header {
+    background: linear-gradient(180deg, var(--purple-ink) 0%, var(--purple-deep) 35%, var(--purple) 100%);
+    color: var(--white);
+    padding: 28px 40px 22px;
+    position: relative; overflow: hidden;
+  }
+  header.app-header::after {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, transparent 0, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px);
+    pointer-events: none;
+  }
+  .header-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; max-width: 1600px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand-badge {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--white); color: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 900; font-size: 26px;
+    letter-spacing: -0.02em; flex-shrink: 0;
+  }
+  .brand-text h1 { margin: 0; font-weight: 300; font-size: 22px; letter-spacing: 0.04em; }
+  .brand-text h1 strong { font-weight: 900; letter-spacing: -0.005em; }
+  .brand-text .subtitle {
+    font-size: 12px; opacity: 0.75; margin-top: 2px;
+    letter-spacing: 0.08em; text-transform: lowercase;
+    font-family: 'Source Serif 4', serif; font-style: italic;
+  }
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .last-sync { font-size: 11px; opacity: 0.7; padding-right: 6px; text-align: right; letter-spacing: 0.02em; }
+  .last-sync strong { opacity: 1; font-weight: 700; }
+  .btn {
+    border: none; padding: 10px 18px; border-radius: 3px;
+    font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-primary { background: var(--white); color: var(--purple-ink); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .world-toggle {
+    display: inline-flex; background: rgba(0,0,0,0.25);
+    padding: 3px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.15);
+  }
+  .world-toggle button {
+    background: transparent; color: rgba(255,255,255,0.7); border: none;
+    padding: 8px 14px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px;
+  }
+  .world-toggle button.active { background: var(--white); color: var(--purple-ink); }
+
+  /* Tab navigation */
+  nav.tabs {
+    background: var(--white);
+    border-bottom: 1px solid var(--hairline);
+    padding: 0 40px;
+    display: flex; gap: 2px; overflow-x: auto;
+    box-shadow: var(--shadow-sm);
+    position: sticky; top: 0; z-index: 30;
+  }
+  nav.tabs button {
+    background: transparent; border: none;
+    padding: 18px 22px 16px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--mid);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  nav.tabs button:hover { color: var(--heron); }
+  nav.tabs button.active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+  }
+
+  main { max-width: 1600px; margin: 0 auto; padding: 24px 40px 80px; }
+
+  .stats-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px; margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--white); border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 16px 18px; box-shadow: var(--shadow-sm);
+  }
+  .stat-card .label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--mid);
+  }
+  .stat-card .value {
+    font-family: 'Source Serif 4', serif; font-size: 28px; font-weight: 900;
+    color: var(--heron); margin-top: 6px; line-height: 1.1; letter-spacing: -0.01em;
+  }
+  .stat-card .delta { font-size: 11px; font-weight: 700; margin-top: 4px; }
+  .delta.up { color: var(--field); }
+  .delta.down { color: var(--red-warn); }
+  .stat-card.accent {
+    background: linear-gradient(180deg, var(--purple-deep), var(--purple));
+    color: var(--white); border: none;
+  }
+  .stat-card.accent .label { color: rgba(255,255,255,0.8); }
+  .stat-card.accent .value { color: var(--white); }
+
+  .filter-bar {
+    background: var(--white); border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 14px 16px; margin-bottom: 14px;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-bar input, .filter-bar select {
+    border: 1px solid var(--hairline); padding: 9px 11px; border-radius: 3px;
+    font-size: 13px; background: var(--white); color: var(--heron); min-height: 38px;
+  }
+  .filter-bar input:focus, .filter-bar select:focus {
+    outline: 2px solid var(--purple); outline-offset: -1px; border-color: var(--purple);
+  }
+  .filter-bar input[type="search"] { flex: 1 1 240px; min-width: 200px; }
+  .filter-bar select { flex: 0 1 auto; min-width: 140px; }
+  .clear-btn {
+    background: transparent; border: 1px solid var(--hairline); color: var(--mid);
+    padding: 8px 12px; border-radius: 3px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .clear-btn:hover { background: var(--light-space); color: var(--heron); }
+
+  /* Product selector chips */
+  .product-chips {
+    display: inline-flex; gap: 2px;
+    background: var(--light-space); padding: 3px; border-radius: 3px;
+    flex-wrap: wrap;
+  }
+  .product-chips button {
+    background: transparent; border: none;
+    padding: 7px 12px; border-radius: 2px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--mid);
+  }
+  .product-chips button.active {
+    background: var(--heron); color: var(--white);
+  }
+  .product-chips button:hover:not(.active) { background: var(--white); color: var(--heron); }
+
+  .table-wrap {
+    background: var(--white); border: 1px solid var(--hairline);
+    border-radius: 4px; overflow: auto;
+    max-height: calc(100vh - 340px); box-shadow: var(--shadow-sm);
+  }
+  table.leader {
+    width: 100%; border-collapse: collapse; font-size: 12.5px; white-space: nowrap;
+  }
+  table.leader thead th {
+    background: var(--heron); color: var(--white); font-weight: 700;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 10px 10px; text-align: left;
+    position: sticky; top: 0; z-index: 3;
+    cursor: pointer; user-select: none;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  table.leader thead th:hover { background: var(--purple-ink); }
+  table.leader thead th.sorted-asc::after { content: ' ↑'; color: var(--sun); }
+  table.leader thead th.sorted-desc::after { content: ' ↓'; color: var(--sun); }
+  table.leader thead th.group-sales { background: #1a1a1a; }
+  table.leader thead th.group-year { background: #1a1a1a; }
+  table.leader thead th.group-total { background: var(--purple); }
+  table.leader tbody td {
+    padding: 9px 10px; border-bottom: 1px solid var(--hairline); vertical-align: middle;
+  }
+  table.leader tbody tr:hover { background: rgba(124, 16, 154, 0.04); }
+  table.leader td.company {
+    font-weight: 700; color: var(--heron); text-transform: capitalize;
+    max-width: 260px; overflow: hidden; text-overflow: ellipsis;
+    position: sticky; left: 0; background: var(--white);
+    box-shadow: 1px 0 0 var(--hairline); z-index: 1;
+  }
+  table.leader tbody tr:hover td.company { background: #faf5fc; }
+  table.leader td.numeric { text-align: right; font-variant-numeric: tabular-nums; }
+  table.leader td.total { font-weight: 700; background: rgba(124, 16, 154, 0.06); color: var(--purple-ink); }
+  table.leader td.pct-pos { color: var(--field); font-weight: 700; }
+  table.leader td.pct-neg { color: var(--red-warn); font-weight: 700; }
+  table.leader td.pct-neutral { color: var(--mid); }
+  table.leader td.muted { color: var(--mid); }
+
+  .grade-chip {
+    display: inline-block; padding: 2px 8px; border-radius: 2px;
+    font-size: 10px; font-weight: 900; letter-spacing: 0.06em;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .grade-A\+ { background: var(--purple); color: var(--white); }
+  .grade-A { background: #3a0850; color: var(--white); }
+  .grade-B { background: var(--sky); color: var(--white); }
+  .grade-C { background: var(--field); color: var(--white); }
+  .grade-D { background: var(--mid); color: var(--white); }
+  .grade-NA { background: var(--light-space); color: var(--mid); }
+  .region { color: var(--mid); font-size: 11px; text-transform: capitalize; }
+
+  /* Info notice for missing per-year data */
+  .notice {
+    background: #fff8e1;
+    border: 1px solid #f5d56e;
+    color: #6a4b00;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 12.5px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .notice strong { color: #4a3400; }
+
+  /* Resync modal */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(17,17,17,0.6);
+    display: none; align-items: center; justify-content: center;
+    z-index: 200; padding: 20px;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 4px; padding: 32px;
+    max-width: 560px; width: 100%; box-shadow: var(--shadow-lg);
+  }
+  .modal h2 {
+    font-family: 'Source Serif 4', serif; font-weight: 900;
+    font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em;
+  }
+  .modal p { color: var(--mid); margin: 0 0 16px; font-size: 13.5px; }
+  .sync-steps {
+    background: var(--light-space); border-radius: 3px;
+    padding: 14px 16px; margin: 16px 0; font-size: 12.5px;
+  }
+  .sync-step { display: flex; align-items: center; gap: 10px; padding: 5px 0; }
+  .sync-step .marker {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--hairline); flex-shrink: 0;
+  }
+  .sync-step.done .marker { background: var(--field); border-color: var(--field); }
+  .sync-step.active .marker { border-color: var(--purple); animation: pulse 1.2s infinite; }
+  .sync-step.error .marker { background: var(--red-warn); border-color: var(--red-warn); }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(124,16,154,0.4); } 50% { box-shadow: 0 0 0 8px rgba(124,16,154,0); } }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+  .btn-dark { background: var(--purple); color: var(--white); border: none; }
+  .btn-dark:hover { background: var(--purple-ink); }
+  .btn-dark:disabled { background: var(--mid); cursor: not-allowed; }
+  .btn-outline { background: transparent; color: var(--mid); border: 1px solid var(--hairline); }
+  .btn-outline:hover { border-color: var(--heron); color: var(--heron); }
+  .resync-log {
+    max-height: 160px; overflow: auto; background: #111;
+    color: #7AB800; font-family: 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 11px; padding: 10px 12px; border-radius: 3px;
+    margin-top: 12px; white-space: pre-wrap; line-height: 1.5;
+  }
+
+  @media (max-width: 760px) {
+    header.app-header { padding: 18px 16px; }
+    .header-row { flex-wrap: wrap; gap: 12px; }
+    nav.tabs { padding: 0 10px; }
+    nav.tabs button { padding: 14px 14px; font-size: 11px; }
+    main { padding: 16px 12px 60px; }
+    .filter-bar { padding: 12px; }
+    .filter-bar input, .filter-bar select { flex: 1 1 100%; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .brand-text h1 { font-size: 16px; }
+    .table-wrap { max-height: 60vh; }
+    .grade-chip { font-size: 9px; }
+  }
+  @media print {
+    nav.tabs, header.app-header .header-actions, .filter-bar { display: none !important; }
+    .table-wrap { max-height: none; overflow: visible; box-shadow: none; }
+    body { background: white; }
+    table.leader thead th { background: #111 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-row">
+    <div class="brand">
+      <div class="brand-badge">S</div>
+      <div class="brand-text">
+        <h1>SHADOWSPEC <strong>DEALER LEADERBOARD</strong></h1>
+        <div class="subtitle">bringing people together</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="world-toggle" id="worldToggle">
+        <button data-world="nzau" class="active">AU &amp; NZ</button>
+        <button data-world="usa">USA</button>
+      </div>
+      <div class="last-sync">
+        Last sync<br><strong id="lastSyncText">from uploaded data</strong>
+      </div>
+      <button class="btn btn-primary" id="refreshBtn">↻ Refresh</button>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="tabNav">
+  <button data-tab="leaderboard" class="active">Leaderboard</button>
+  <button data-tab="products">Products Sold</button>
+</nav>
+
+<main id="app"></main>
+
+
+
+<script>
+let DATA = { nzau_dealers: [], usa_dealers: [] };
+const DATA_URL = 'data/dealer_data.json';
+const FALLBACK_DATA_URL = 'https://unicrestgroup.github.io/unicrest-portal/data/dealer_data.json';
+
+const PRODUCT_LIST = [
+  { key: 'retreat',  label: 'Retreat'  },
+  { key: 'serenity', label: 'Serenity' },
+  { key: 'unity',    label: 'Unity'    },
+  { key: 'su2',      label: 'SU2'      },
+  { key: 'su4',      label: 'SU4'      },
+  { key: 'su10',     label: 'SU10'     },
+  { key: 'oasis',    label: 'Oasis'    },
+];
+
+const YEARS_NZAU = ['y2022', 'y2023', 'y2024', 'y2025', 'y2026_ytd'];
+const YEAR_LABELS_NZAU = ['2022', '2023', '2024', '2025', '2026 YTD'];
+const YEARS_USA  = ['y2023', 'y2024', 'y2025', 'y2026_ytd'];
+const YEAR_LABELS_USA  = ['2023', '2024', '2025', '2026 YTD'];
+
+const STATE = {
+  world: 'nzau',
+  tab: 'leaderboard',
+  productFilter: 'all',
+  filter: { q: '', grade: '', region: '' },
+  sort: { key: 'y2025', dir: 'desc' },
+};
+
+const STORAGE_KEY = 'shadowspec_dealer_lb_v2';
+function loadPersisted() {
+  try { const raw = localStorage.getItem(STORAGE_KEY); if (!raw) return null; return JSON.parse(raw); }
+  catch { return null; }
+}
+function persist(payload) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch {} }
+
+const persisted = loadPersisted();
+if (persisted) {
+  if (persisted.nzau_dealers) DATA.nzau_dealers = persisted.nzau_dealers;
+  if (persisted.usa_dealers) DATA.usa_dealers = persisted.usa_dealers;
+  if (persisted.last_sync) {
+    document.getElementById('lastSyncText').textContent = new Date(persisted.last_sync).toLocaleString('en-NZ');
+  }
+}
+
+// Formatting
+function fmtMoney(v, compact = false) {
+  if (v === null || v === undefined || v === '' || isNaN(+v)) return '—';
+  const n = +v;
+  if (n === 0) return '$0';
+  if (compact && Math.abs(n) >= 1000) {
+    if (Math.abs(n) >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+    return '$' + (n/1e3).toFixed(0) + 'k';
+  }
+  return '$' + n.toLocaleString('en-NZ', { maximumFractionDigits: 0 });
+}
+function fmtPct(v) {
+  if (v === null || v === undefined || isNaN(+v)) return '—';
+  return (+v * 100).toFixed(1) + '%';
+}
+function fmtNum(v) {
+  if (v === null || v === undefined || v === '' || isNaN(+v)) return '—';
+  return (+v).toLocaleString('en-NZ');
+}
+function pctClass(v) {
+  if (v === null || v === undefined || isNaN(+v)) return 'pct-neutral';
+  const n = +v;
+  if (n < 1) return 'pct-neg';
+  return 'pct-pos';
+}
+function gradeBase(g) {
+  if (!g) return 'NA';
+  const m = g.match(/^([A-D]\+?)/i);
+  return m ? m[1].toUpperCase() : 'NA';
+}
+function cap(s) { if (!s) return ''; return String(s).replace(/\b\w/g, c => c.toUpperCase()); }
+function currentDealers() { return STATE.world === 'nzau' ? (DATA.nzau_dealers || []) : (DATA.usa_dealers || []); }
+
+// Per-year product key: e.g. p_retreat_2024, p_retreat_2026_ytd. Total: p_retreat.
+function productYearKey(productKey, yearCol) {
+  // yearCol looks like 'y2024' or 'y2026_ytd'. Strip leading 'y'.
+  const suffix = yearCol.replace(/^y/, '');
+  return 'p_' + productKey + '_' + suffix;
+}
+
+function applyFilters(rows) {
+  const q = STATE.filter.q.toLowerCase().trim();
+  const g = STATE.filter.grade;
+  const rg = STATE.filter.region;
+  return rows.filter(r => {
+    if (q && !(r.company || '').toLowerCase().includes(q)) return false;
+    if (g && gradeBase(r.grade) !== g) return false;
+    if (rg && (r.region || '').toLowerCase() !== rg.toLowerCase()) return false;
+    return true;
+  });
+}
+function applySort(rows) {
+  const { key, dir } = STATE.sort;
+  const mul = dir === 'asc' ? 1 : -1;
+  return [...rows].sort((a, b) => {
+    const av = a[key], bv = b[key];
+    const anv = (av === null || av === undefined || av === '' || isNaN(+av));
+    const bnv = (bv === null || bv === undefined || bv === '' || isNaN(+bv));
+    if (anv && bnv) return (String(av||'').localeCompare(String(bv||''))) * mul;
+    if (anv) return 1;
+    if (bnv) return -1;
+    const an = +av, bn = +bv;
+    if (!isNaN(an) && !isNaN(bn)) return (an - bn) * mul;
+    return (String(av).localeCompare(String(bv))) * mul;
+  });
+}
+function sumCol(rows, key) {
+  let t = 0;
+  for (const r of rows) {
+    const v = r[key];
+    if (v !== null && v !== undefined && !isNaN(+v)) t += +v;
+  }
+  return t;
+}
+
+// Shared filter bar UI
+function filterBarHTML(dealers, extraRight = '') {
+  const regions = [...new Set(dealers.map(d => d.region).filter(Boolean))].sort();
+  return `<div class="filter-bar">
+    <input id="f-q" type="search" placeholder="Search dealer name..." value="${STATE.filter.q.replace(/"/g,'&quot;')}">
+    <select id="f-grade">
+      <option value="">All grades</option>
+      <option value="A+" ${STATE.filter.grade==='A+'?'selected':''}>A+ Platinum Elite</option>
+      <option value="A" ${STATE.filter.grade==='A'?'selected':''}>A Diamond Partner</option>
+      <option value="B" ${STATE.filter.grade==='B'?'selected':''}>B Gold Standard</option>
+      <option value="C" ${STATE.filter.grade==='C'?'selected':''}>C Premier Plus</option>
+      <option value="D" ${STATE.filter.grade==='D'?'selected':''}>D Bronze Certified</option>
+    </select>
+    <select id="f-region">
+      <option value="">All regions</option>
+      ${regions.map(r => `<option value="${r}" ${STATE.filter.region===r?'selected':''}>${cap(r)}</option>`).join('')}
+    </select>
+    <button class="clear-btn" id="f-clear">Clear</button>
+    <button class="clear-btn" id="f-export">Export CSV</button>
+    ${extraRight}
+  </div>`;
+}
+
+function wireFilters() {
+  const q = document.getElementById('f-q');
+  if (q) q.addEventListener('input', e => { STATE.filter.q = e.target.value; showView(); });
+  const g = document.getElementById('f-grade');
+  if (g) g.addEventListener('change', e => { STATE.filter.grade = e.target.value; showView(); });
+  const r = document.getElementById('f-region');
+  if (r) r.addEventListener('change', e => { STATE.filter.region = e.target.value; showView(); });
+  const c = document.getElementById('f-clear');
+  if (c) c.addEventListener('click', () => {
+    STATE.filter = { q: '', grade: '', region: '' };
+    showView();
+  });
+}
+
+// =============================================================
+//  LEADERBOARD VIEW (sales)
+// =============================================================
+function renderLeaderboard() {
+  const host = document.getElementById('app');
+  const dealers = currentDealers();
+  const filtered = applyFilters(dealers);
+  const sorted = applySort(filtered);
+
+  const t2025 = sumCol(filtered, 'y2025');
+  const t2026 = sumCol(filtered, 'y2026_ytd');
+  const target2026 = sumCol(filtered, 'target_2026');
+  const revTarget = sumCol(filtered, 'revenue_target');
+  const delta25_26 = t2025 > 0 ? (t2026 / t2025) : null;
+
+  const isNZAU = STATE.world === 'nzau';
+  const yearCols = isNZAU
+    ? YEARS_NZAU.map((k, i) => [k, YEAR_LABELS_NZAU[i]])
+    : YEARS_USA.map((k, i) => [k, YEAR_LABELS_USA[i]]);
+
+  const cols = [
+    { key: 'company', label: 'Dealer', group: 'main' },
+    { key: 'grade', label: 'Grade', group: 'main' },
+    { key: 'discount_rate', label: 'Discount', group: 'main' },
+    { key: 'region', label: 'Region', group: 'main' },
+    ...yearCols.map(([k, l]) => ({ key: k, label: l, group: 'sales', numeric: true })),
+    { key: 'pct_24_25', label: '% 24→25', group: 'sales', numeric: true },
+    { key: 'pct_25_26', label: '% 25→26', group: 'sales', numeric: true },
+    { key: 'target_2026', label: '2026 Target', group: 'sales', numeric: true },
+    { key: 'revenue_target', label: 'Dealer Rev. Target', group: 'sales', numeric: true },
+  ];
+
+  const headerHTML = `<tr>${cols.map(c => {
+    const sortedCls = STATE.sort.key === c.key ? (STATE.sort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc') : '';
+    const groupClass = c.group === 'sales' ? 'group-sales' : '';
+    return `<th class="${sortedCls} ${groupClass}" data-key="${c.key}">${c.label}</th>`;
+  }).join('')}</tr>`;
+
+  const bodyHTML = sorted.map(r => {
+    const grade = gradeBase(r.grade);
+    const gClass = 'grade-' + grade;
+    return `<tr>
+      <td class="company" title="${(r.company||'').replace(/"/g,'&quot;')}">${cap(r.company || '—')}</td>
+      <td><span class="grade-chip ${gClass}">${r.grade ? grade : '—'}</span></td>
+      <td>${r.discount_rate || '—'}</td>
+      <td class="region">${r.region ? cap(r.region) : '—'}</td>
+      ${yearCols.map(([k]) => `<td class="numeric">${fmtMoney(r[k], true)}</td>`).join('')}
+      <td class="numeric ${pctClass(r.pct_24_25)}">${fmtPct(r.pct_24_25)}</td>
+      <td class="numeric ${pctClass(r.pct_25_26)}">${fmtPct(r.pct_25_26)}</td>
+      <td class="numeric">${fmtMoney(r.target_2026, true)}</td>
+      <td class="numeric">${fmtMoney(r.revenue_target, true)}</td>
+    </tr>`;
+  }).join('');
+
+  host.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card accent">
+        <div class="label">Dealers shown</div>
+        <div class="value">${filtered.length}<span style="font-size:14px;opacity:0.7"> / ${dealers.length}</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="label">2025 total sales</div>
+        <div class="value">${fmtMoney(t2025, true)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">2026 YTD sales</div>
+        <div class="value">${fmtMoney(t2026, true)}</div>
+        <div class="delta ${delta25_26 && delta25_26 > 0 ? 'up' : 'down'}">
+          ${delta25_26 !== null ? (delta25_26 * 100).toFixed(1) + '% of 2025 run rate' : ''}
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="label">2026 target</div>
+        <div class="value">${fmtMoney(target2026, true)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Dealer revenue target</div>
+        <div class="value">${fmtMoney(revTarget, true)}</div>
+      </div>
+    </div>
+
+    ${filterBarHTML(dealers)}
+
+    <div class="table-wrap">
+      <table class="leader">
+        <thead>${headerHTML}</thead>
+        <tbody>${bodyHTML || '<tr><td colspan="99" style="padding:40px;text-align:center;color:var(--mid)">No dealers match the current filters.</td></tr>'}</tbody>
+      </table>
+    </div>
+  `;
+
+  wireFilters();
+  document.getElementById('f-export').addEventListener('click', () => exportCSV(sorted, cols, 'leaderboard'));
+  host.querySelectorAll('thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.key;
+      if (STATE.sort.key === k) STATE.sort.dir = STATE.sort.dir === 'asc' ? 'desc' : 'asc';
+      else { STATE.sort.key = k; STATE.sort.dir = ['company','grade','discount_rate','region'].includes(k) ? 'asc' : 'desc'; }
+      showView();
+    });
+  });
+}
+
+// =============================================================
+//  PRODUCTS SOLD VIEW
+// =============================================================
+function renderProducts() {
+  const host = document.getElementById('app');
+  const dealers = currentDealers();
+  const filtered = applyFilters(dealers);
+
+  const isNZAU = STATE.world === 'nzau';
+  const yearCols = isNZAU
+    ? YEARS_NZAU.map((k, i) => [k, YEAR_LABELS_NZAU[i]])
+    : YEARS_USA.map((k, i) => [k, YEAR_LABELS_USA[i]]);
+
+  // Detect if any per-year product data exists yet
+  let hasYearData = false;
+  for (const d of dealers) {
+    for (const p of PRODUCT_LIST) {
+      for (const [yk] of yearCols) {
+        if (d[productYearKey(p.key, yk)] !== undefined && d[productYearKey(p.key, yk)] !== null) {
+          hasYearData = true; break;
+        }
+      }
+      if (hasYearData) break;
+    }
+    if (hasYearData) break;
+  }
+
+  // Product chip selector: All + one per product
+  const chips = `<div class="product-chips" id="productChips">
+    <button data-p="all" class="${STATE.productFilter==='all'?'active':''}">All products</button>
+    ${PRODUCT_LIST.map(p => `<button data-p="${p.key}" class="${STATE.productFilter===p.key?'active':''}">${p.label}</button>`).join('')}
+  </div>`;
+
+  // Build columns + sorted rows based on product filter
+  let cols, bodyRowsSorted, exportLabel;
+  if (STATE.productFilter === 'all') {
+    // Columns: dealer meta + each product total + grand total
+    cols = [
+      { key: 'company', label: 'Dealer' },
+      { key: 'grade', label: 'Grade' },
+      { key: 'region', label: 'Region' },
+      ...PRODUCT_LIST.map(p => ({ key: 'p_' + p.key, label: p.label, numeric: true, total: true })),
+      { key: '_grand_total', label: 'Grand Total', numeric: true, total: true, group: 'total' },
+    ];
+    // Compute grand total on the fly for sorting
+    const withTotals = filtered.map(d => {
+      const gt = PRODUCT_LIST.reduce((sum, p) => sum + (+d['p_' + p.key] || 0), 0);
+      return { ...d, _grand_total: gt };
+    });
+    bodyRowsSorted = applySort(withTotals);
+    exportLabel = 'products_all';
+  } else {
+    const p = PRODUCT_LIST.find(x => x.key === STATE.productFilter);
+    // Columns: dealer meta + each year + total
+    cols = [
+      { key: 'company', label: 'Dealer' },
+      { key: 'grade', label: 'Grade' },
+      { key: 'region', label: 'Region' },
+      ...yearCols.map(([yk, yl]) => ({ key: productYearKey(p.key, yk), label: yl, numeric: true, group: 'year' })),
+      { key: 'p_' + p.key, label: p.label + ' Total', numeric: true, total: true, group: 'total' },
+    ];
+    bodyRowsSorted = applySort(filtered);
+    exportLabel = 'products_' + p.key;
+  }
+
+  const headerHTML = `<tr>${cols.map(c => {
+    const sortedCls = STATE.sort.key === c.key ? (STATE.sort.dir === 'asc' ? 'sorted-asc' : 'sorted-desc') : '';
+    let groupClass = '';
+    if (c.group === 'year') groupClass = 'group-year';
+    else if (c.group === 'total') groupClass = 'group-total';
+    return `<th class="${sortedCls} ${groupClass}" data-key="${c.key}">${c.label}</th>`;
+  }).join('')}</tr>`;
+
+  const bodyHTML = bodyRowsSorted.map(r => {
+    const grade = gradeBase(r.grade);
+    const gClass = 'grade-' + grade;
+    const cells = cols.map(c => {
+      if (c.key === 'company') return `<td class="company" title="${(r.company||'').replace(/"/g,'&quot;')}">${cap(r.company || '—')}</td>`;
+      if (c.key === 'grade') return `<td><span class="grade-chip ${gClass}">${r.grade ? grade : '—'}</span></td>`;
+      if (c.key === 'region') return `<td class="region">${r.region ? cap(r.region) : '—'}</td>`;
+      const v = r[c.key];
+      const cls = 'numeric' + (c.total ? ' total' : '') + ((v === null || v === undefined) ? ' muted' : '');
+      return `<td class="${cls}">${fmtNum(v)}</td>`;
+    }).join('');
+    return `<tr>${cells}</tr>`;
+  }).join('');
+
+  // Summary stats for products
+  const productTotals = PRODUCT_LIST.map(p => ({
+    label: p.label,
+    total: sumCol(filtered, 'p_' + p.key),
+  }));
+  const grandTotal = productTotals.reduce((s, p) => s + p.total, 0);
+
+  host.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-card accent">
+        <div class="label">Dealers shown</div>
+        <div class="value">${filtered.length}<span style="font-size:14px;opacity:0.7"> / ${dealers.length}</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Total units sold</div>
+        <div class="value">${fmtNum(grandTotal)}</div>
+      </div>
+      ${productTotals.slice(0,3).map(p => `
+        <div class="stat-card">
+          <div class="label">${p.label}</div>
+          <div class="value">${fmtNum(p.total)}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    ${!hasYearData ? `<div class="notice">
+      <div><strong>Per-year breakdown not yet loaded.</strong> The uploaded spreadsheet only contains all-time product totals. Click <strong>Resync HubSpot</strong> to pull per-year product counts from 2022 onward.</div>
+    </div>` : ''}
+
+    <div class="filter-bar">
+      <input id="f-q" type="search" placeholder="Search dealer name..." value="${STATE.filter.q.replace(/"/g,'&quot;')}">
+      <select id="f-grade">
+        <option value="">All grades</option>
+        <option value="A+" ${STATE.filter.grade==='A+'?'selected':''}>A+ Platinum Elite</option>
+        <option value="A" ${STATE.filter.grade==='A'?'selected':''}>A Diamond Partner</option>
+        <option value="B" ${STATE.filter.grade==='B'?'selected':''}>B Gold Standard</option>
+        <option value="C" ${STATE.filter.grade==='C'?'selected':''}>C Premier Plus</option>
+        <option value="D" ${STATE.filter.grade==='D'?'selected':''}>D Bronze Certified</option>
+      </select>
+      <select id="f-region">
+        <option value="">All regions</option>
+        ${[...new Set(dealers.map(d => d.region).filter(Boolean))].sort().map(r => `<option value="${r}" ${STATE.filter.region===r?'selected':''}>${cap(r)}</option>`).join('')}
+      </select>
+      <button class="clear-btn" id="f-clear">Clear</button>
+      <button class="clear-btn" id="f-export">Export CSV</button>
+      <div style="flex:1 1 0"></div>
+      ${chips}
+    </div>
+
+    <div class="table-wrap">
+      <table class="leader">
+        <thead>${headerHTML}</thead>
+        <tbody>${bodyHTML || '<tr><td colspan="99" style="padding:40px;text-align:center;color:var(--mid)">No dealers match the current filters.</td></tr>'}</tbody>
+      </table>
+    </div>
+  `;
+
+  wireFilters();
+  document.getElementById('f-export').addEventListener('click', () => exportCSV(bodyRowsSorted, cols, exportLabel));
+  document.querySelectorAll('#productChips button').forEach(b => {
+    b.addEventListener('click', () => {
+      STATE.productFilter = b.dataset.p;
+      // Reset sort to a sensible default for the selected view
+      if (STATE.productFilter === 'all') {
+        STATE.sort = { key: '_grand_total', dir: 'desc' };
+      } else {
+        STATE.sort = { key: 'p_' + STATE.productFilter, dir: 'desc' };
+      }
+      showView();
+    });
+  });
+  host.querySelectorAll('thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.key;
+      if (STATE.sort.key === k) STATE.sort.dir = STATE.sort.dir === 'asc' ? 'desc' : 'asc';
+      else { STATE.sort.key = k; STATE.sort.dir = ['company','grade','region'].includes(k) ? 'asc' : 'desc'; }
+      showView();
+    });
+  });
+}
+
+// =============================================================
+//  VIEW DISPATCH
+// =============================================================
+function showView() {
+  if (STATE.tab === 'leaderboard') renderLeaderboard();
+  else renderProducts();
+}
+
+function exportCSV(rows, cols, label) {
+  const header = cols.map(c => c.label).join(',');
+  const lines = rows.map(r => cols.map(c => {
+    let v = r[c.key];
+    if (v === null || v === undefined) v = '';
+    v = String(v);
+    if (v.includes(',') || v.includes('"') || v.includes('\n')) v = '"' + v.replace(/"/g, '""') + '"';
+    return v;
+  }).join(','));
+  const csv = [header, ...lines].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `shadowspec_${STATE.world}_${label || 'data'}_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// World toggle
+document.getElementById('worldToggle').querySelectorAll('button').forEach(b => {
+  b.addEventListener('click', () => {
+    STATE.world = b.dataset.world;
+    STATE.filter = { q: '', grade: '', region: '' };
+    if (STATE.tab === 'leaderboard') STATE.sort = { key: 'y2025', dir: 'desc' };
+    else if (STATE.productFilter === 'all') STATE.sort = { key: '_grand_total', dir: 'desc' };
+    else STATE.sort = { key: 'p_' + STATE.productFilter, dir: 'desc' };
+    document.querySelectorAll('#worldToggle button').forEach(x => x.classList.toggle('active', x === b));
+    showView();
+  });
+});
+
+// Tab nav
+document.querySelectorAll('#tabNav button').forEach(b => {
+  b.addEventListener('click', () => {
+    STATE.tab = b.dataset.tab;
+    document.querySelectorAll('#tabNav button').forEach(x => x.classList.toggle('active', x === b));
+    // Reset sort to sensible default for the new tab
+    if (STATE.tab === 'leaderboard') {
+      STATE.sort = { key: 'y2025', dir: 'desc' };
+    } else {
+      STATE.sort = STATE.productFilter === 'all'
+        ? { key: '_grand_total', dir: 'desc' }
+        : { key: 'p_' + STATE.productFilter, dir: 'desc' };
+    }
+    showView();
+  });
+});
+
+// =============================================================
+//  DATA LOADING
+// =============================================================
+const refreshBtn = document.getElementById('refreshBtn');
+
+async function loadData(showSpinner = true) {
+  if (showSpinner) refreshBtn.textContent = 'Loading...';
+  refreshBtn.disabled = true;
+
+  let payload = null;
+  let triedUrls = [];
+  for (const url of [DATA_URL, FALLBACK_DATA_URL]) {
+    triedUrls.push(url);
+    try {
+      const r = await fetch(url + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      payload = await r.json();
+      console.log('Loaded data from', url);
+      break;
+    } catch (e) {
+      console.warn('Failed to fetch', url, e.message);
+    }
+  }
+
+  refreshBtn.disabled = false;
+  refreshBtn.textContent = '↻ Refresh';
+
+  if (!payload) {
+    document.getElementById('lastSyncText').textContent = 'load failed';
+    document.getElementById('app').innerHTML = `
+      <div style="background:#fff;border:1px solid #c8303f;border-left:4px solid #c8303f;padding:20px;border-radius:4px;">
+        <h3 style="margin:0 0 8px;font-family:'Source Serif 4',serif;font-weight:900;color:#111;">Could not load dealer data</h3>
+        <p style="margin:0;color:#464749;font-size:13px;">
+          Tried: <code>${triedUrls.join('</code>, <code>')}</code><br>
+          Check that the scheduled GitHub Action has run successfully and committed <code>data/dealer_data.json</code> to the repo.
+        </p>
+      </div>`;
+    return;
+  }
+
+  DATA.nzau_dealers = payload.nzau_dealers || [];
+  DATA.usa_dealers = payload.usa_dealers || [];
+  if (payload.generated_at) {
+    document.getElementById('lastSyncText').textContent = new Date(payload.generated_at).toLocaleString('en-NZ');
+  }
+  showView();
+}
+
+refreshBtn.addEventListener('click', () => loadData(true));
+
+loadData(false);
+</script>
+
+</body>
+</html>
