@@ -186,25 +186,39 @@ def fetch_deal_company_map(s: requests.Session, deal_ids: list[str]) -> dict[str
 # Step 4: filter companies by persona
 # -----------------------------------------------------------------------------
 
-def fetch_company_personas(s: requests.Session, company_ids: list[str]) -> dict[str, str]:
-    """Return {company_id: hs_persona} via batch read."""
+def fetch_company_details(s: requests.Session, company_ids: list[str]) -> dict[str, dict]:
+    """Return {company_id: {name, country}} for the given companies."""
     if not company_ids:
         return {}
-    out: dict[str, str] = {}
+    out: dict[str, dict] = {}
     url = "https://api.hubapi.com/crm/v3/objects/companies/batch/read"
     unique_ids = list(set(company_ids))
     for i in range(0, len(unique_ids), 100):
         batch = unique_ids[i:i+100]
         payload = {
             "inputs": [{"id": cid} for cid in batch],
-            "properties": ["hs_persona", "name"],
+            "properties": ["name", "country", "state"],
         }
         data = post_with_retry(s, url, payload)
         for row in data.get("results", []):
             cid = str(row.get("id"))
-            persona = row.get("properties", {}).get("hs_persona") or ""
-            out[cid] = persona
+            props = row.get("properties", {})
+            out[cid] = {
+                "name": props.get("name"),
+                "country": props.get("country"),
+                "state": props.get("state"),
+            }
     return out
+
+NZAU_COUNTRIES = {"new zealand", "nz", "australia", "au"}
+USA_COUNTRIES = {"united states", "usa", "us", "united states of america", "america"}
+
+def classify_world(country: str | None) -> str | None:
+    if not country: return None
+    c = country.strip().lower()
+    if c in NZAU_COUNTRIES: return "nzau"
+    if c in USA_COUNTRIES: return "usa"
+    return None
 
 # -----------------------------------------------------------------------------
 # Step 5: line items per deal
@@ -262,8 +276,9 @@ def classify_product(name: str) -> str | None:
 # Aggregate
 # -----------------------------------------------------------------------------
 
-def aggregate_2026(s: requests.Session) -> dict[str, dict]:
-    """Return {company_id: {amount: float, products: {key: count}}}."""
+def aggregate_2026(s: requests.Session, historical_ids: set[str]) -> dict[str, dict]:
+    """Return {company_id: {amount: float, products: {key: count}}}.
+    Filters deals to only those associated with companies in historical_ids."""
     log("\n[1/5] Fetching pipeline stages...")
     allowed_stages = fetch_allowed_stages(s)
 
@@ -279,10 +294,13 @@ def aggregate_2026(s: requests.Session) -> dict[str, dict]:
     deal_to_co = fetch_deal_company_map(s, deal_ids)
     log(f"  resolved {len(deal_to_co)} of {len(deal_ids)} deal-company links")
 
-    log("\n[4/5] Filtering companies by dealer persona...")
-    co_personas = fetch_company_personas(s, list(deal_to_co.values()))
-    valid_companies = {cid for cid, p in co_personas.items() if p in ALLOWED_PERSONAS}
-    log(f"  {len(valid_companies)} of {len(co_personas)} companies match dealer personas")
+    log("\n[4/5] Identifying historical vs new dealer companies...")
+    co_ids_seen = set(deal_to_co.values())
+    historical_match = co_ids_seen & historical_ids
+    new_co_ids = co_ids_seen - historical_ids
+    log(f"  {len(historical_match)} of {len(co_ids_seen)} companies are in the historical baseline")
+    log(f"  {len(new_co_ids)} companies have 2026 deals but are NOT in historical (will be added as new dealers)")
+    valid_companies = co_ids_seen  # accept all, classify later
 
     log("\n[5/5] Fetching line items for product breakdown...")
     deal_to_lis = fetch_deal_lineitem_map(s, deal_ids)
@@ -342,14 +360,6 @@ def merge_dealers(historical: list[dict], live_2026: dict[str, dict]) -> list[di
         else:
             d["pct_25_26"] = None
         out.append(d)
-
-    # New dealers in 2026 that aren't in historical (logged for awareness)
-    new_ids = set(live_2026.keys()) - matched_ids
-    if new_ids:
-        log(f"  note: {len(new_ids)} dealers have 2026 sales but no historical record. "
-            "Add them to the source Excel and re-export historical_dealers.json to include them.")
-        for cid in list(new_ids)[:10]:
-            log(f"    company id {cid}: ${live_2026[cid]['amount']:,.2f}")
     return out
 
 # -----------------------------------------------------------------------------
@@ -364,11 +374,55 @@ def main() -> int:
     log(f"Loaded historical: {len(historical['nzau_dealers'])} NZAU + {len(historical['usa_dealers'])} USA dealers")
 
     s = hs_session()
-    live_2026 = aggregate_2026(s)
+    all_historical_ids = set()
+    for d in historical["nzau_dealers"] + historical["usa_dealers"]:
+        if d.get("id"):
+            all_historical_ids.add(str(d["id"]))
+    log(f"Historical dealer IDs: {len(all_historical_ids)}")
+
+    live_2026 = aggregate_2026(s, all_historical_ids)
 
     log("\n[merge] Combining historical + 2026 YTD...")
     nzau_merged = merge_dealers(historical["nzau_dealers"], live_2026)
     usa_merged = merge_dealers(historical["usa_dealers"], live_2026)
+
+    # Auto-add new dealers (in 2026 sales but not in historical)
+    matched_ids = {str(d["id"]) for d in nzau_merged + usa_merged if d.get("id")}
+    new_ids = [cid for cid in live_2026.keys() if cid not in matched_ids]
+    if new_ids:
+        log(f"\n[new] Looking up {len(new_ids)} new dealers from HubSpot...")
+        details = fetch_company_details(s, new_ids)
+        added_nzau = added_usa = skipped = 0
+        for cid in new_ids:
+            info = details.get(cid, {})
+            world = classify_world(info.get("country"))
+            if not world:
+                log(f"  skipping {cid} ({info.get('name', '?')}): country '{info.get('country')}' not recognised")
+                skipped += 1
+                continue
+            live = live_2026[cid]
+            d = {
+                "id": cid,
+                "company": (info.get("name") or "").lower() or f"unknown ({cid})",
+                "grade": None, "discount_rate": None,
+                "region": info.get("state"),
+                "target_2026": None, "revenue_target": None,
+                "is_new_dealer": True,
+                "y2026_ytd": round(live["amount"], 2),
+                "pct_24_25": None, "pct_25_26": None,
+            }
+            for pk in PRODUCT_KEYS:
+                d[f"p_{pk}"] = live["products"].get(pk, 0) or None
+                d[f"p_{pk}_2026_ytd"] = live["products"].get(pk, 0)
+            if world == "nzau":
+                d.update({"y2022": None, "y2023": None, "y2024": None, "y2025": None})
+                nzau_merged.append(d)
+                added_nzau += 1
+            else:
+                d.update({"y2023": None, "y2024": None, "y2025": None})
+                usa_merged.append(d)
+                added_usa += 1
+        log(f"  added {added_nzau} NZAU + {added_usa} USA new dealers, {skipped} skipped (no country)")
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
